@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_8df2b1934276c15ae2f30cbfaf60ef90 {
+                    position: relative;
+                    width: 100.0vw;
+                    height: 100.0vh;
+
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>/*
+ * Glyphicons Halflings -- the icon font used by folium's default Awesome Markers
+ * (Icon(prefix="glyphicon")). Extracted from Bootstrap 3's glyphicon rules only.
+ *
+ * folium previously loaded netdna's bootstrap-glyphicons.css, which despite its
+ * name ships a full Bootstrap-3 base stylesheet (normalize reset + global `body`
+ * rules) that leaked onto the host page (GH-1820). This file provides just the
+ * @font-face and .glyphicon/.glyphicon-* rules needed for the markers, with no
+ * page-wide side effects. Font files are served from jsDelivr.
+ */
+@font-face{font-family:'Glyphicons Halflings';src:url('https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/fonts/glyphicons-halflings-regular.eot');src:url('https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),url('https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/fonts/glyphicons-halflings-regular.woff') format('woff'),url('https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/fonts/glyphicons-halflings-regular.ttf') format('truetype'),url('https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');}.glyphicon{position:relative;top:1px;display:inline-block;font-family:'Glyphicons Halflings';font-style:normal;font-weight:normal;line-height:1;-webkit-font-smoothing:antialiased;}
+.glyphicon-asterisk:before{content:"\2a";}
+.glyphicon-plus:before{content:"\2b";}
+.glyphicon-euro:before{content:"\20ac";}
+.glyphicon-minus:before{content:"\2212";}
+.glyphicon-cloud:before{content:"\2601";}
+.glyphicon-envelope:before{content:"\2709";}
+.glyphicon-pencil:before{content:"\270f";}
+.glyphicon-glass:before{content:"\e001";}
+.glyphicon-music:before{content:"\e002";}
+.glyphicon-search:before{content:"\e003";}
+.glyphicon-heart:before{content:"\e005";}
+.glyphicon-star:before{content:"\e006";}
+.glyphicon-star-empty:before{content:"\e007";}
+.glyphicon-user:before{content:"\e008";}
+.glyphicon-film:before{content:"\e009";}
+.glyphicon-th-large:before{content:"\e010";}
+.glyphicon-th:before{content:"\e011";}
+.glyphicon-th-list:before{content:"\e012";}
+.glyphicon-ok:before{content:"\e013";}
+.glyphicon-remove:before{content:"\e014";}
+.glyphicon-zoom-in:before{content:"\e015";}
+.glyphicon-zoom-out:before{content:"\e016";}
+.glyphicon-off:before{content:"\e017";}
+.glyphicon-signal:before{content:"\e018";}
+.glyphicon-cog:before{content:"\e019";}
+.glyphicon-trash:before{content:"\e020";}
+.glyphicon-home:before{content:"\e021";}
+.glyphicon-file:before{content:"\e022";}
+.glyphicon-time:before{content:"\e023";}
+.glyphicon-road:before{content:"\e024";}
+.glyphicon-download-alt:before{content:"\e025";}
+.glyphicon-download:before{content:"\e026";}
+.glyphicon-upload:before{content:"\e027";}
+.glyphicon-inbox:before{content:"\e028";}
+.glyphicon-play-circle:before{content:"\e029";}
+.glyphicon-repeat:before{content:"\e030";}
+.glyphicon-refresh:before{content:"\e031";}
+.glyphicon-list-alt:before{content:"\e032";}
+.glyphicon-flag:before{content:"\e034";}
+.glyphicon-headphones:before{content:"\e035";}
+.glyphicon-volume-off:before{content:"\e036";}
+.glyphicon-volume-down:before{content:"\e037";}
+.glyphicon-volume-up:before{content:"\e038";}
+.glyphicon-qrcode:before{content:"\e039";}
+.glyphicon-barcode:before{content:"\e040";}
+.glyphicon-tag:before{content:"\e041";}
+.glyphicon-tags:before{content:"\e042";}
+.glyphicon-book:before{content:"\e043";}
+.glyphicon-print:before{content:"\e045";}
+.glyphicon-font:before{content:"\e047";}
+.glyphicon-bold:before{content:"\e048";}
+.glyphicon-italic:before{content:"\e049";}
+.glyphicon-text-height:before{content:"\e050";}
+.glyphicon-text-width:before{content:"\e051";}
+.glyphicon-align-left:before{content:"\e052";}
+.glyphicon-align-center:before{content:"\e053";}
+.glyphicon-align-right:before{content:"\e054";}
+.glyphicon-align-justify:before{content:"\e055";}
+.glyphicon-list:before{content:"\e056";}
+.glyphicon-indent-left:before{content:"\e057";}
+.glyphicon-indent-right:before{content:"\e058";}
+.glyphicon-facetime-video:before{content:"\e059";}
+.glyphicon-picture:before{content:"\e060";}
+.glyphicon-map-marker:before{content:"\e062";}
+.glyphicon-adjust:before{content:"\e063";}
+.glyphicon-tint:before{content:"\e064";}
+.glyphicon-edit:before{content:"\e065";}
+.glyphicon-share:before{content:"\e066";}
+.glyphicon-check:before{content:"\e067";}
+.glyphicon-move:before{content:"\e068";}
+.glyphicon-step-backward:before{content:"\e069";}
+.glyphicon-fast-backward:before{content:"\e070";}
+.glyphicon-backward:before{content:"\e071";}
+.glyphicon-play:before{content:"\e072";}
+.glyphicon-pause:before{content:"\e073";}
+.glyphicon-stop:before{content:"\e074";}
+.glyphicon-forward:before{content:"\e075";}
+.glyphicon-fast-forward:before{content:"\e076";}
+.glyphicon-step-forward:before{content:"\e077";}
+.glyphicon-eject:before{content:"\e078";}
+.glyphicon-chevron-left:before{content:"\e079";}
+.glyphicon-chevron-right:before{content:"\e080";}
+.glyphicon-plus-sign:before{content:"\e081";}
+.glyphicon-minus-sign:before{content:"\e082";}
+.glyphicon-remove-sign:before{content:"\e083";}
+.glyphicon-ok-sign:before{content:"\e084";}
+.glyphicon-question-sign:before{content:"\e085";}
+.glyphicon-info-sign:before{content:"\e086";}
+.glyphicon-screenshot:before{content:"\e087";}
+.glyphicon-remove-circle:before{content:"\e088";}
+.glyphicon-ok-circle:before{content:"\e089";}
+.glyphicon-ban-circle:before{content:"\e090";}
+.glyphicon-arrow-left:before{content:"\e091";}
+.glyphicon-arrow-right:before{content:"\e092";}
+.glyphicon-arrow-up:before{content:"\e093";}
+.glyphicon-arrow-down:before{content:"\e094";}
+.glyphicon-share-alt:before{content:"\e095";}
+.glyphicon-resize-full:before{content:"\e096";}
+.glyphicon-resize-small:before{content:"\e097";}
+.glyphicon-exclamation-sign:before{content:"\e101";}
+.glyphicon-gift:before{content:"\e102";}
+.glyphicon-leaf:before{content:"\e103";}
+.glyphicon-eye-open:before{content:"\e105";}
+.glyphicon-eye-close:before{content:"\e106";}
+.glyphicon-warning-sign:before{content:"\e107";}
+.glyphicon-plane:before{content:"\e108";}
+.glyphicon-random:before{content:"\e110";}
+.glyphicon-comment:before{content:"\e111";}
+.glyphicon-magnet:before{content:"\e112";}
+.glyphicon-chevron-up:before{content:"\e113";}
+.glyphicon-chevron-down:before{content:"\e114";}
+.glyphicon-retweet:before{content:"\e115";}
+.glyphicon-shopping-cart:before{content:"\e116";}
+.glyphicon-folder-close:before{content:"\e117";}
+.glyphicon-folder-open:before{content:"\e118";}
+.glyphicon-resize-vertical:before{content:"\e119";}
+.glyphicon-resize-horizontal:before{content:"\e120";}
+.glyphicon-hdd:before{content:"\e121";}
+.glyphicon-bullhorn:before{content:"\e122";}
+.glyphicon-certificate:before{content:"\e124";}
+.glyphicon-thumbs-up:before{content:"\e125";}
+.glyphicon-thumbs-down:before{content:"\e126";}
+.glyphicon-hand-right:before{content:"\e127";}
+.glyphicon-hand-left:before{content:"\e128";}
+.glyphicon-hand-up:before{content:"\e129";}
+.glyphicon-hand-down:before{content:"\e130";}
+.glyphicon-circle-arrow-right:before{content:"\e131";}
+.glyphicon-circle-arrow-left:before{content:"\e132";}
+.glyphicon-circle-arrow-up:before{content:"\e133";}
+.glyphicon-circle-arrow-down:before{content:"\e134";}
+.glyphicon-globe:before{content:"\e135";}
+.glyphicon-tasks:before{content:"\e137";}
+.glyphicon-filter:before{content:"\e138";}
+.glyphicon-fullscreen:before{content:"\e140";}
+.glyphicon-dashboard:before{content:"\e141";}
+.glyphicon-heart-empty:before{content:"\e143";}
+.glyphicon-link:before{content:"\e144";}
+.glyphicon-phone:before{content:"\e145";}
+.glyphicon-usd:before{content:"\e148";}
+.glyphicon-gbp:before{content:"\e149";}
+.glyphicon-sort:before{content:"\e150";}
+.glyphicon-sort-by-alphabet:before{content:"\e151";}
+.glyphicon-sort-by-alphabet-alt:before{content:"\e152";}
+.glyphicon-sort-by-order:before{content:"\e153";}
+.glyphicon-sort-by-order-alt:before{content:"\e154";}
+.glyphicon-sort-by-attributes:before{content:"\e155";}
+.glyphicon-sort-by-attributes-alt:before{content:"\e156";}
+.glyphicon-unchecked:before{content:"\e157";}
+.glyphicon-expand:before{content:"\e158";}
+.glyphicon-collapse-down:before{content:"\e159";}
+.glyphicon-collapse-up:before{content:"\e160";}
+.glyphicon-log-in:before{content:"\e161";}
+.glyphicon-flash:before{content:"\e162";}
+.glyphicon-log-out:before{content:"\e163";}
+.glyphicon-new-window:before{content:"\e164";}
+.glyphicon-record:before{content:"\e165";}
+.glyphicon-save:before{content:"\e166";}
+.glyphicon-open:before{content:"\e167";}
+.glyphicon-saved:before{content:"\e168";}
+.glyphicon-import:before{content:"\e169";}
+.glyphicon-export:before{content:"\e170";}
+.glyphicon-send:before{content:"\e171";}
+.glyphicon-floppy-disk:before{content:"\e172";}
+.glyphicon-floppy-saved:before{content:"\e173";}
+.glyphicon-floppy-remove:before{content:"\e174";}
+.glyphicon-floppy-save:before{content:"\e175";}
+.glyphicon-floppy-open:before{content:"\e176";}
+.glyphicon-credit-card:before{content:"\e177";}
+.glyphicon-transfer:before{content:"\e178";}
+.glyphicon-cutlery:before{content:"\e179";}
+.glyphicon-header:before{content:"\e180";}
+.glyphicon-compressed:before{content:"\e181";}
+.glyphicon-earphone:before{content:"\e182";}
+.glyphicon-phone-alt:before{content:"\e183";}
+.glyphicon-tower:before{content:"\e184";}
+.glyphicon-stats:before{content:"\e185";}
+.glyphicon-sd-video:before{content:"\e186";}
+.glyphicon-hd-video:before{content:"\e187";}
+.glyphicon-subtitles:before{content:"\e188";}
+.glyphicon-sound-stereo:before{content:"\e189";}
+.glyphicon-sound-dolby:before{content:"\e190";}
+.glyphicon-sound-5-1:before{content:"\e191";}
+.glyphicon-sound-6-1:before{content:"\e192";}
+.glyphicon-sound-7-1:before{content:"\e193";}
+.glyphicon-copyright-mark:before{content:"\e194";}
+.glyphicon-registration-mark:before{content:"\e195";}
+.glyphicon-cloud-download:before{content:"\e197";}
+.glyphicon-cloud-upload:before{content:"\e198";}
+.glyphicon-tree-conifer:before{content:"\e199";}
+.glyphicon-tree-deciduous:before{content:"\e200";}
+.glyphicon-briefcase:before{content:"\1f4bc";}
+.glyphicon-calendar:before{content:"\1f4c5";}
+.glyphicon-pushpin:before{content:"\1f4cc";}
+.glyphicon-paperclip:before{content:"\1f4ce";}
+.glyphicon-camera:before{content:"\1f4f7";}
+.glyphicon-lock:before{content:"\1f512";}
+.glyphicon-bell:before{content:"\1f514";}
+.glyphicon-bookmark:before{content:"\1f516";}
+.glyphicon-fire:before{content:"\1f525";}
+.glyphicon-wrench:before{content:"\1f527";}
+</style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+<div style="
+position: fixed;
+bottom: 30px;
+left: 30px;
+width: 190px;
+background-color: white;
+border: 2px solid grey;
+z-index: 9999;
+padding: 10px;
+font-size: 14px;">
+<b>Geospatial Sales Map</b><br>
+<span style="color:red;">●</span> Expansion candidates<br>
+<span style="color:blue;">●</span> Other business locations
+</div>
+    
+            <div class="folium-map" id="map_8df2b1934276c15ae2f30cbfaf60ef90" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_8df2b1934276c15ae2f30cbfaf60ef90 = L.map(
+                "map_8df2b1934276c15ae2f30cbfaf60ef90",
+                {
+                    center: [20.5937, 78.9629],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 5,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_2545eaf7c34c2a6ada35e7867ba3557c = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_2545eaf7c34c2a6ada35e7867ba3557c.addTo(map_8df2b1934276c15ae2f30cbfaf60ef90);
+        
+    
+            var circle_marker_72528cf70ad0e722d706fcf16371513f = L.circleMarker(
+                [12.9165, 79.1325],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_8df2b1934276c15ae2f30cbfaf60ef90);
+        
+    
+        var popup_f02a5f17beb23ba1c03c259b979c2f11 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_8fa1168299494257939427324cda07e2 = $(`<div id="html_8fa1168299494257939427324cda07e2" style="width: 100.0%; height: 100.0%;">     <b>City:</b> Vellore<br>     <b>State:</b> Tamil Nadu<br>     <b>Sales:</b> ₹28,000<br>     <b>Customer Demand:</b> 680<br>     <b>Existing Stores:</b> 1<br>     <b>Demand Per Store:</b> 680.00<br>     <b>Expansion Candidate:</b> Yes     </div>`)[0];
+                popup_f02a5f17beb23ba1c03c259b979c2f11.setContent(html_8fa1168299494257939427324cda07e2);
+            
+        
+
+        circle_marker_72528cf70ad0e722d706fcf16371513f.bindPopup(popup_f02a5f17beb23ba1c03c259b979c2f11)
+        ;
+
+        
+    
+    
+            circle_marker_72528cf70ad0e722d706fcf16371513f.bindTooltip(
+                `<div>
+                     Vellore
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c81fea572a7192225577b7fbf584e5bb = L.circleMarker(
+                [8.7642, 78.1348],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_8df2b1934276c15ae2f30cbfaf60ef90);
+        
+    
+        var popup_9e8f3b050d7271d866233bfd5f964e67 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_daeaa162e95e756e9334d0327b940fb7 = $(`<div id="html_daeaa162e95e756e9334d0327b940fb7" style="width: 100.0%; height: 100.0%;">     <b>City:</b> Thoothukudi<br>     <b>State:</b> Tamil Nadu<br>     <b>Sales:</b> ₹25,000<br>     <b>Customer Demand:</b> 620<br>     <b>Existing Stores:</b> 1<br>     <b>Demand Per Store:</b> 620.00<br>     <b>Expansion Candidate:</b> Yes     </div>`)[0];
+                popup_9e8f3b050d7271d866233bfd5f964e67.setContent(html_daeaa162e95e756e9334d0327b940fb7);
+            
+        
+
+        circle_marker_c81fea572a7192225577b7fbf584e5bb.bindPopup(popup_9e8f3b050d7271d866233bfd5f964e67)
+        ;
+
+        
+    
+    
+            circle_marker_c81fea572a7192225577b7fbf584e5bb.bindTooltip(
+                `<div>
+                     Thoothukudi
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_78ecb1b5e001c66f80dad8a6e3ed59c3 = L.circleMarker(
+                [8.7139, 77.7567],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_8df2b1934276c15ae2f30cbfaf60ef90);
+        
+    
+        var popup_8e52ad6e73e422b2e4b8e88c2ffd25c8 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9c80110963d55f597676fdb2fda417bf = $(`<div id="html_9c80110963d55f597676fdb2fda417bf" style="width: 100.0%; height: 100.0%;">     <b>City:</b> Tirunelveli<br>     <b>State:</b> Tamil Nadu<br>     <b>Sales:</b> ₹30,000<br>     <b>Customer Demand:</b> 600<br>     <b>Existing Stores:</b> 1<br>     <b>Demand Per Store:</b> 600.00<br>     <b>Expansion Candidate:</b> Yes     </div>`)[0];
+                popup_8e52ad6e73e422b2e4b8e88c2ffd25c8.setContent(html_9c80110963d55f597676fdb2fda417bf);
+            
+        
+
+        circle_marker_78ecb1b5e001c66f80dad8a6e3ed59c3.bindPopup(popup_8e52ad6e73e422b2e4b8e88c2ffd25c8)
+        ;
+
+        
+    
+    
+            circle_marker_78ecb1b5e001c66f80dad8a6e3ed59c3.bindTooltip(
+                `<div>
+                     Tirunelveli
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c13cd1c383d44eddecd8a4945fce1f66 = L.circleMarker(
+                [10.3673, 77.9803],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_8df2b1934276c15ae2f30cbfaf60ef90);
+        
+    
+        var popup_98c3d7247434fe79b7033859c72d224f = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_7e325f368a481dba512179952ddaeac1 = $(`<div id="html_7e325f368a481dba512179952ddaeac1" style="width: 100.0%; height: 100.0%;">     <b>City:</b> Dindigul<br>     <b>State:</b> Tamil Nadu<br>     <b>Sales:</b> ₹22,000<br>     <b>Customer Demand:</b> 580<br>     <b>Existing Stores:</b> 1<br>     <b>Demand Per Store:</b> 580.00<br>     <b>Expansion Candidate:</b> Yes     </div>`)[0];
+                popup_98c3d7247434fe79b7033859c72d224f.setContent(html_7e325f368a481dba512179952ddaeac1);
+            
+        
+
+        circle_marker_c13cd1c383d44eddecd8a4945fce1f66.bindPopup(popup_98c3d7247434fe79b7033859c72d224f)
+        ;
+
+        
+    
+    
+            circle_marker_c13cd1c383d44eddecd8a4945fce1f66.bindTooltip(
+                `<div>
+                     Dindigul
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_01011e11d8ef9f355b4e409b97e9d09b = L.circleMarker(
+                [10.5276, 76.2144],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_8df2b1934276c15ae2f30cbfaf60ef90);
+        
+    
+        var popup_d1a4348186fa0d67182bd3fd31054d84 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_af1b9ac144eee99f457b54fd49401141 = $(`<div id="html_af1b9ac144eee99f457b54fd49401141" style="width: 100.0%; height: 100.0%;">     <b>City:</b> Thrissur<br>     <b>State:</b> Kerala<br>     <b>Sales:</b> ₹48,000<br>     <b>Customer Demand:</b> 780<br>     <b>Existing Stores:</b> 2<br>     <b>Demand Per Store:</b> 390.00<br>     <b>Expansion Candidate:</b> Yes     </div>`)[0];
+                popup_d1a4348186fa0d67182bd3fd31054d84.setContent(html_af1b9ac144eee99f457b54fd49401141);
+            
+        
+
+        circle_marker_01011e11d8ef9f355b4e409b97e9d09b.bindPopup(popup_d1a4348186fa0d67182bd3fd31054d84)
+        ;
+
+        
+    
+    
+            circle_marker_01011e11d8ef9f355b4e409b97e9d09b.bindTooltip(
+                `<div>
+                     Thrissur
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1b435c806c21adf42c344cdabd4d0d4f = L.circleMarker(
+                [11.341, 77.7172],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_8df2b1934276c15ae2f30cbfaf60ef90);
+        
+    
+        var popup_e24c4ca8f42d5d240511e28b498ec46e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_2c0c31e9528eeafe04c0fe0a7d8ed50d = $(`<div id="html_2c0c31e9528eeafe04c0fe0a7d8ed50d" style="width: 100.0%; height: 100.0%;">     <b>City:</b> Erode<br>     <b>State:</b> Tamil Nadu<br>     <b>Sales:</b> ₹42,000<br>     <b>Customer Demand:</b> 720<br>     <b>Existing Stores:</b> 2<br>     <b>Demand Per Store:</b> 360.00<br>     <b>Expansion Candidate:</b> No     </div>`)[0];
+                popup_e24c4ca8f42d5d240511e28b498ec46e.setContent(html_2c0c31e9528eeafe04c0fe0a7d8ed50d);
+            
+        
+
+        circle_marker_1b435c806c21adf42c344cdabd4d0d4f.bindPopup(popup_e24c4ca8f42d5d240511e28b498ec46e)
+        ;
+
+        
+    
+    
+            circle_marker_1b435c806c21adf42c344cdabd4d0d4f.bindTooltip(
+                `<div>
+                     Erode
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0bcc856919fde714adcd728a96ccab3d = L.circleMarker(
+                [9.9252, 78.1198],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_8df2b1934276c15ae2f30cbfaf60ef90);
+        
+    
+        var popup_60dcd2aab4f06143a83070d0c5ccf6c2 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_6d36422222ca161115416981bb71d743 = $(`<div id="html_6d36422222ca161115416981bb71d743" style="width: 100.0%; height: 100.0%;">     <b>City:</b> Madurai<br>     <b>State:</b> Tamil Nadu<br>     <b>Sales:</b> ₹45,000<br>     <b>Customer Demand:</b> 700<br>     <b>Existing Stores:</b> 2<br>     <b>Demand Per Store:</b> 350.00<br>     <b>Expansion Candidate:</b> No     </div>`)[0];
+                popup_60dcd2aab4f06143a83070d0c5ccf6c2.setContent(html_6d36422222ca161115416981bb71d743);
+            
+        
+
+        circle_marker_0bcc856919fde714adcd728a96ccab3d.bindPopup(popup_60dcd2aab4f06143a83070d0c5ccf6c2)
+        ;
+
+        
+    
+    
+            circle_marker_0bcc856919fde714adcd728a96ccab3d.bindTooltip(
+                `<div>
+                     Madurai
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8fb7a4958eae85ca0c1e738b5405c12c = L.circleMarker(
+                [11.6643, 78.146],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_8df2b1934276c15ae2f30cbfaf60ef90);
+        
+    
+        var popup_f1d413651322961cd5a453f8a3146a2d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_5622cc9cde11aec9dbd6713a4ae5ab49 = $(`<div id="html_5622cc9cde11aec9dbd6713a4ae5ab49" style="width: 100.0%; height: 100.0%;">     <b>City:</b> Salem<br>     <b>State:</b> Tamil Nadu<br>     <b>Sales:</b> ₹38,000<br>     <b>Customer Demand:</b> 650<br>     <b>Existing Stores:</b> 2<br>     <b>Demand Per Store:</b> 325.00<br>     <b>Expansion Candidate:</b> No     </div>`)[0];
+                popup_f1d413651322961cd5a453f8a3146a2d.setContent(html_5622cc9cde11aec9dbd6713a4ae5ab49);
+            
+        
+
+        circle_marker_8fb7a4958eae85ca0c1e738b5405c12c.bindPopup(popup_f1d413651322961cd5a453f8a3146a2d)
+        ;
+
+        
+    
+    
+            circle_marker_8fb7a4958eae85ca0c1e738b5405c12c.bindTooltip(
+                `<div>
+                     Salem
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_48f5ae8db8bc058daa737ffe0d3116eb = L.circleMarker(
+                [11.0168, 76.9558],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7.2, "stroke": true, "weight": 3}
+            ).addTo(map_8df2b1934276c15ae2f30cbfaf60ef90);
+        
+    
+        var popup_31dcb206203fede438314f91360ec761 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_aceb702046003d21f72a274f495691d6 = $(`<div id="html_aceb702046003d21f72a274f495691d6" style="width: 100.0%; height: 100.0%;">     <b>City:</b> Coimbatore<br>     <b>State:</b> Tamil Nadu<br>     <b>Sales:</b> ₹72,000<br>     <b>Customer Demand:</b> 850<br>     <b>Existing Stores:</b> 3<br>     <b>Demand Per Store:</b> 283.33<br>     <b>Expansion Candidate:</b> No     </div>`)[0];
+                popup_31dcb206203fede438314f91360ec761.setContent(html_aceb702046003d21f72a274f495691d6);
+            
+        
+
+        circle_marker_48f5ae8db8bc058daa737ffe0d3116eb.bindPopup(popup_31dcb206203fede438314f91360ec761)
+        ;
+
+        
+    
+    
+            circle_marker_48f5ae8db8bc058daa737ffe0d3116eb.bindTooltip(
+                `<div>
+                     Coimbatore
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_48e9dbf55568da23a47a7ce5e890ebf8 = L.circleMarker(
+                [16.5062, 80.648],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.8, "stroke": true, "weight": 3}
+            ).addTo(map_8df2b1934276c15ae2f30cbfaf60ef90);
+        
+    
+        var popup_b7d4e7a92b0e4007ecd702bad980dbfc = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_a864ba2efee6c7d97c80f4875a2c718e = $(`<div id="html_a864ba2efee6c7d97c80f4875a2c718e" style="width: 100.0%; height: 100.0%;">     <b>City:</b> Vijayawada<br>     <b>State:</b> Andhra Pradesh<br>     <b>Sales:</b> ₹58,000<br>     <b>Customer Demand:</b> 800<br>     <b>Existing Stores:</b> 3<br>     <b>Demand Per Store:</b> 266.67<br>     <b>Expansion Candidate:</b> No     </div>`)[0];
+                popup_b7d4e7a92b0e4007ecd702bad980dbfc.setContent(html_a864ba2efee6c7d97c80f4875a2c718e);
+            
+        
+
+        circle_marker_48e9dbf55568da23a47a7ce5e890ebf8.bindPopup(popup_b7d4e7a92b0e4007ecd702bad980dbfc)
+        ;
+
+        
+    
+    
+            circle_marker_48e9dbf55568da23a47a7ce5e890ebf8.bindTooltip(
+                `<div>
+                     Vijayawada
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ac7143333304e69c55c35c97800d648c = L.circleMarker(
+                [10.7905, 78.7047],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.2, "stroke": true, "weight": 3}
+            ).addTo(map_8df2b1934276c15ae2f30cbfaf60ef90);
+        
+    
+        var popup_8d6e78d412dbd875f59177f71d8a831b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_66a4a2ca0ac3c69112b7cd3b00e277e1 = $(`<div id="html_66a4a2ca0ac3c69112b7cd3b00e277e1" style="width: 100.0%; height: 100.0%;">     <b>City:</b> Tiruchirappalli<br>     <b>State:</b> Tamil Nadu<br>     <b>Sales:</b> ₹52,000<br>     <b>Customer Demand:</b> 750<br>     <b>Existing Stores:</b> 3<br>     <b>Demand Per Store:</b> 250.00<br>     <b>Expansion Candidate:</b> No     </div>`)[0];
+                popup_8d6e78d412dbd875f59177f71d8a831b.setContent(html_66a4a2ca0ac3c69112b7cd3b00e277e1);
+            
+        
+
+        circle_marker_ac7143333304e69c55c35c97800d648c.bindPopup(popup_8d6e78d412dbd875f59177f71d8a831b)
+        ;
+
+        
+    
+    
+            circle_marker_ac7143333304e69c55c35c97800d648c.bindTooltip(
+                `<div>
+                     Tiruchirappalli
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2f68193e0388919b2b35165aa71184ed = L.circleMarker(
+                [12.2958, 76.6394],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6.5, "stroke": true, "weight": 3}
+            ).addTo(map_8df2b1934276c15ae2f30cbfaf60ef90);
+        
+    
+        var popup_7d6bd70775f59efe1fdbc674ba131734 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d26b31f267ddaab5177818d19377bd18 = $(`<div id="html_d26b31f267ddaab5177818d19377bd18" style="width: 100.0%; height: 100.0%;">     <b>City:</b> Mysuru<br>     <b>State:</b> Karnataka<br>     <b>Sales:</b> ₹65,000<br>     <b>Customer Demand:</b> 850<br>     <b>Existing Stores:</b> 4<br>     <b>Demand Per Store:</b> 212.50<br>     <b>Expansion Candidate:</b> No     </div>`)[0];
+                popup_7d6bd70775f59efe1fdbc674ba131734.setContent(html_d26b31f267ddaab5177818d19377bd18);
+            
+        
+
+        circle_marker_2f68193e0388919b2b35165aa71184ed.bindPopup(popup_7d6bd70775f59efe1fdbc674ba131734)
+        ;
+
+        
+    
+    
+            circle_marker_2f68193e0388919b2b35165aa71184ed.bindTooltip(
+                `<div>
+                     Mysuru
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6e66ac50af105d8994c4211a76843fcb = L.circleMarker(
+                [9.9312, 76.2673],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6.8, "stroke": true, "weight": 3}
+            ).addTo(map_8df2b1934276c15ae2f30cbfaf60ef90);
+        
+    
+        var popup_ba80cf3809edefcab84f4b72a28e96a0 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_7cc1990e7959640b879d833d7c16dc31 = $(`<div id="html_7cc1990e7959640b879d833d7c16dc31" style="width: 100.0%; height: 100.0%;">     <b>City:</b> Kochi<br>     <b>State:</b> Kerala<br>     <b>Sales:</b> ₹68,000<br>     <b>Customer Demand:</b> 900<br>     <b>Existing Stores:</b> 5<br>     <b>Demand Per Store:</b> 180.00<br>     <b>Expansion Candidate:</b> No     </div>`)[0];
+                popup_ba80cf3809edefcab84f4b72a28e96a0.setContent(html_7cc1990e7959640b879d833d7c16dc31);
+            
+        
+
+        circle_marker_6e66ac50af105d8994c4211a76843fcb.bindPopup(popup_ba80cf3809edefcab84f4b72a28e96a0)
+        ;
+
+        
+    
+    
+            circle_marker_6e66ac50af105d8994c4211a76843fcb.bindTooltip(
+                `<div>
+                     Kochi
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_dfab7e69003ecc73a7e32215ef75f1d9 = L.circleMarker(
+                [22.5726, 88.3639],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8.2, "stroke": true, "weight": 3}
+            ).addTo(map_8df2b1934276c15ae2f30cbfaf60ef90);
+        
+    
+        var popup_c86a80bb78620e9bb2bfe3aa90d4c339 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9fdf604972f29100890a078954cd92cd = $(`<div id="html_9fdf604972f29100890a078954cd92cd" style="width: 100.0%; height: 100.0%;">     <b>City:</b> Kolkata<br>     <b>State:</b> West Bengal<br>     <b>Sales:</b> ₹82,000<br>     <b>Customer Demand:</b> 900<br>     <b>Existing Stores:</b> 7<br>     <b>Demand Per Store:</b> 128.57<br>     <b>Expansion Candidate:</b> No     </div>`)[0];
+                popup_c86a80bb78620e9bb2bfe3aa90d4c339.setContent(html_9fdf604972f29100890a078954cd92cd);
+            
+        
+
+        circle_marker_dfab7e69003ecc73a7e32215ef75f1d9.bindPopup(popup_c86a80bb78620e9bb2bfe3aa90d4c339)
+        ;
+
+        
+    
+    
+            circle_marker_dfab7e69003ecc73a7e32215ef75f1d9.bindTooltip(
+                `<div>
+                     Kolkata
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2913e7c919fbf728e0ee49e495d47c52 = L.circleMarker(
+                [17.385, 78.4867],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.8, "stroke": true, "weight": 3}
+            ).addTo(map_8df2b1934276c15ae2f30cbfaf60ef90);
+        
+    
+        var popup_3ad8a5d874deb3982eeca5f29cd60e2a = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_ab5fc93ed82aed775f99b31652c3c73f = $(`<div id="html_ab5fc93ed82aed775f99b31652c3c73f" style="width: 100.0%; height: 100.0%;">     <b>City:</b> Hyderabad<br>     <b>State:</b> Telangana<br>     <b>Sales:</b> ₹98,000<br>     <b>Customer Demand:</b> 1,050<br>     <b>Existing Stores:</b> 9<br>     <b>Demand Per Store:</b> 116.67<br>     <b>Expansion Candidate:</b> No     </div>`)[0];
+                popup_3ad8a5d874deb3982eeca5f29cd60e2a.setContent(html_ab5fc93ed82aed775f99b31652c3c73f);
+            
+        
+
+        circle_marker_2913e7c919fbf728e0ee49e495d47c52.bindPopup(popup_3ad8a5d874deb3982eeca5f29cd60e2a)
+        ;
+
+        
+    
+    
+            circle_marker_2913e7c919fbf728e0ee49e495d47c52.bindTooltip(
+                `<div>
+                     Hyderabad
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_97fa67241c3cfb815fdfcd19a773fdfa = L.circleMarker(
+                [18.5204, 73.8567],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10.5, "stroke": true, "weight": 3}
+            ).addTo(map_8df2b1934276c15ae2f30cbfaf60ef90);
+        
+    
+        var popup_45f688f849c13aeef9971a5fa85b2bf0 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_dd516555c6d4589dff9373e8bd89e1b8 = $(`<div id="html_dd516555c6d4589dff9373e8bd89e1b8" style="width: 100.0%; height: 100.0%;">     <b>City:</b> Pune<br>     <b>State:</b> Maharashtra<br>     <b>Sales:</b> ₹105,000<br>     <b>Customer Demand:</b> 1,150<br>     <b>Existing Stores:</b> 10<br>     <b>Demand Per Store:</b> 115.00<br>     <b>Expansion Candidate:</b> No     </div>`)[0];
+                popup_45f688f849c13aeef9971a5fa85b2bf0.setContent(html_dd516555c6d4589dff9373e8bd89e1b8);
+            
+        
+
+        circle_marker_97fa67241c3cfb815fdfcd19a773fdfa.bindPopup(popup_45f688f849c13aeef9971a5fa85b2bf0)
+        ;
+
+        
+    
+    
+            circle_marker_97fa67241c3cfb815fdfcd19a773fdfa.bindTooltip(
+                `<div>
+                     Pune
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_dc5d4a690a78daddf60eef281edf96ff = L.circleMarker(
+                [13.0827, 80.2707],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.5, "stroke": true, "weight": 3}
+            ).addTo(map_8df2b1934276c15ae2f30cbfaf60ef90);
+        
+    
+        var popup_199a2f16902c438c162b8b76249fd62e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9287b55afc54f5867b013b9cd6dd3b91 = $(`<div id="html_9287b55afc54f5867b013b9cd6dd3b91" style="width: 100.0%; height: 100.0%;">     <b>City:</b> Chennai<br>     <b>State:</b> Tamil Nadu<br>     <b>Sales:</b> ₹95,000<br>     <b>Customer Demand:</b> 950<br>     <b>Existing Stores:</b> 10<br>     <b>Demand Per Store:</b> 95.00<br>     <b>Expansion Candidate:</b> No     </div>`)[0];
+                popup_199a2f16902c438c162b8b76249fd62e.setContent(html_9287b55afc54f5867b013b9cd6dd3b91);
+            
+        
+
+        circle_marker_dc5d4a690a78daddf60eef281edf96ff.bindPopup(popup_199a2f16902c438c162b8b76249fd62e)
+        ;
+
+        
+    
+    
+            circle_marker_dc5d4a690a78daddf60eef281edf96ff.bindTooltip(
+                `<div>
+                     Chennai
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_912bee05d6350b87765d39ad82c3dbf7 = L.circleMarker(
+                [28.6139, 77.209],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 11.5, "stroke": true, "weight": 3}
+            ).addTo(map_8df2b1934276c15ae2f30cbfaf60ef90);
+        
+    
+        var popup_4316da720503e971ee6164e434fac6da = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_a9f24343744d2f65a96143182eb3b488 = $(`<div id="html_a9f24343744d2f65a96143182eb3b488" style="width: 100.0%; height: 100.0%;">     <b>City:</b> Delhi<br>     <b>State:</b> Delhi<br>     <b>Sales:</b> ₹115,000<br>     <b>Customer Demand:</b> 1,300<br>     <b>Existing Stores:</b> 14<br>     <b>Demand Per Store:</b> 92.86<br>     <b>Expansion Candidate:</b> No     </div>`)[0];
+                popup_4316da720503e971ee6164e434fac6da.setContent(html_a9f24343744d2f65a96143182eb3b488);
+            
+        
+
+        circle_marker_912bee05d6350b87765d39ad82c3dbf7.bindPopup(popup_4316da720503e971ee6164e434fac6da)
+        ;
+
+        
+    
+    
+            circle_marker_912bee05d6350b87765d39ad82c3dbf7.bindTooltip(
+                `<div>
+                     Delhi
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f8528fe19e4d818398df23d13a07f557 = L.circleMarker(
+                [12.9716, 77.5946],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 11.0, "stroke": true, "weight": 3}
+            ).addTo(map_8df2b1934276c15ae2f30cbfaf60ef90);
+        
+    
+        var popup_e24ba1c365f1567e4cce1dcb93cef9cf = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_840a31efc3498f629457e0d5030fa7a4 = $(`<div id="html_840a31efc3498f629457e0d5030fa7a4" style="width: 100.0%; height: 100.0%;">     <b>City:</b> Bengaluru<br>     <b>State:</b> Karnataka<br>     <b>Sales:</b> ₹110,000<br>     <b>Customer Demand:</b> 1,100<br>     <b>Existing Stores:</b> 12<br>     <b>Demand Per Store:</b> 91.67<br>     <b>Expansion Candidate:</b> No     </div>`)[0];
+                popup_e24ba1c365f1567e4cce1dcb93cef9cf.setContent(html_840a31efc3498f629457e0d5030fa7a4);
+            
+        
+
+        circle_marker_f8528fe19e4d818398df23d13a07f557.bindPopup(popup_e24ba1c365f1567e4cce1dcb93cef9cf)
+        ;
+
+        
+    
+    
+            circle_marker_f8528fe19e4d818398df23d13a07f557.bindTooltip(
+                `<div>
+                     Bengaluru
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e3bec0b477ca6f834d28662bfba0c9aa = L.circleMarker(
+                [19.076, 72.8777],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 12.5, "stroke": true, "weight": 3}
+            ).addTo(map_8df2b1934276c15ae2f30cbfaf60ef90);
+        
+    
+        var popup_2ec34d57ab27aba1fb30dcc0bb6846a5 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_0cf94bcbfd1e8739388355834eb83f88 = $(`<div id="html_0cf94bcbfd1e8739388355834eb83f88" style="width: 100.0%; height: 100.0%;">     <b>City:</b> Mumbai<br>     <b>State:</b> Maharashtra<br>     <b>Sales:</b> ₹125,000<br>     <b>Customer Demand:</b> 1,200<br>     <b>Existing Stores:</b> 15<br>     <b>Demand Per Store:</b> 80.00<br>     <b>Expansion Candidate:</b> No     </div>`)[0];
+                popup_2ec34d57ab27aba1fb30dcc0bb6846a5.setContent(html_0cf94bcbfd1e8739388355834eb83f88);
+            
+        
+
+        circle_marker_e3bec0b477ca6f834d28662bfba0c9aa.bindPopup(popup_2ec34d57ab27aba1fb30dcc0bb6846a5)
+        ;
+
+        
+    
+    
+            circle_marker_e3bec0b477ca6f834d28662bfba0c9aa.bindTooltip(
+                `<div>
+                     Mumbai
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+</script>
+</html>

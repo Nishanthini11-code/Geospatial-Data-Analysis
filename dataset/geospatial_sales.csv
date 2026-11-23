@@ -1,0 +1,21 @@
+City,State,Latitude,Longitude,Sales,Customer_Demand,Existing_Stores
+Chennai,Tamil Nadu,13.0827,80.2707,95000,950,10
+Coimbatore,Tamil Nadu,11.0168,76.9558,72000,850,3
+Madurai,Tamil Nadu,9.9252,78.1198,45000,700,2
+Salem,Tamil Nadu,11.6643,78.146,38000,650,2
+Tiruchirappalli,Tamil Nadu,10.7905,78.7047,52000,750,3
+Tirunelveli,Tamil Nadu,8.7139,77.7567,30000,600,1
+Erode,Tamil Nadu,11.341,77.7172,42000,720,2
+Vellore,Tamil Nadu,12.9165,79.1325,28000,680,1
+Thoothukudi,Tamil Nadu,8.7642,78.1348,25000,620,1
+Dindigul,Tamil Nadu,10.3673,77.9803,22000,580,1
+Bengaluru,Karnataka,12.9716,77.5946,110000,1100,12
+Mysuru,Karnataka,12.2958,76.6394,65000,850,4
+Hyderabad,Telangana,17.385,78.4867,98000,1050,9
+Vijayawada,Andhra Pradesh,16.5062,80.648,58000,800,3
+Kochi,Kerala,9.9312,76.2673,68000,900,5
+Thrissur,Kerala,10.5276,76.2144,48000,780,2
+Mumbai,Maharashtra,19.076,72.8777,125000,1200,15
+Pune,Maharashtra,18.5204,73.8567,105000,1150,10
+Delhi,Delhi,28.6139,77.209,115000,1300,14
+Kolkata,West Bengal,22.5726,88.3639,82000,900,7

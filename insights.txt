@@ -1,0 +1,21 @@
+GEOSPATIAL DATA ANALYSIS - BUSINESS INSIGHTS
+=============================================
+
+Total Sales: Rs. 1,323,000
+Total Customer Demand: 17,130
+Total Existing Stores: 107
+
+Highest Sales City: Mumbai
+Highest Demand City: Delhi
+Best Expansion Candidate: Vellore
+
+Top 5 Expansion Locations:
+       City      State  Customer_Demand  Existing_Stores  Demand_Per_Store
+    Vellore Tamil Nadu              680                1             680.0
+Thoothukudi Tamil Nadu              620                1             620.0
+Tirunelveli Tamil Nadu              600                1             600.0
+   Dindigul Tamil Nadu              580                1             580.0
+   Thrissur     Kerala              780                2             390.0
+
+Conclusion:
+Locations with high customer demand and fewer existing stores may offer opportunities for business expansion. Further analysis of costs, competition, and profitability is recommended before making actual business decisions.
